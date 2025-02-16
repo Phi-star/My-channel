@@ -4,12 +4,12 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Serve static files normally (including the image)
+// Serve static files (except the image)
 app.use(express.static(__dirname));
 
 // Handle the root URL "/" and instantly redirect to the desired link
 app.get("/", (req, res) => {
-    // Perform the instant redirect to the link
+    // Instant redirect to the URL without showing anything
     return res.redirect(301, "https://shorturl.at/FUrJH");
 });
 
