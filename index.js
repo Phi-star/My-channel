@@ -7,9 +7,10 @@ const port = process.env.PORT || 3000;
 // Serve static files normally (including the image)
 app.use(express.static(__dirname));
 
-// Handle the main page URL "/" and instantly redirect to the desired link
+// Handle the root URL "/" and instantly redirect to the desired link
 app.get("/", (req, res) => {
-    return res.redirect(301, "https://shorturl.at/FUrJH");  // Redirect to the link immediately
+    // Perform the instant redirect to the link
+    return res.redirect(301, "https://shorturl.at/FUrJH");
 });
 
 // Handle access to "your-image.jpg" directly
