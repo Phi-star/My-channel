@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:image" content="your-image.jpg">
-    <title>My Image Host</title>
+    <title>Hosted Image</title>
 </head>
 <body>
-    <h1>Hosted Image</h1>
-    <img src="your-image.jpg" alt="Hosted Image">
-    <p>Direct Link: <a href="your-image.jpg" target="_blank">Click Here</a></p>
+    <h1>Click the Image</h1>
+    
+    <img id="redirectImage" src="your-image.jpg" alt="Hosted Image" width="500">
+
+    <script>
+        document.getElementById("redirectImage").addEventListener("click", function () {
+            window.location.href = "https://shorturl.at/FUrJH"; // Redirect instantly on click
+        });
+    </script>
 </body>
-</html>
+        </html>
