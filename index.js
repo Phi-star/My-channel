@@ -4,31 +4,18 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Serve static files (except the image when accessed directly)
-app.use(express.static(__dirname, {
-    setHeaders: (res, filePath) => {
-        if (filePath.endsWith("your-image.jpg")) {
-            res.redirect(301, "https://shorturl.at/FUrJH"); // Redirect instantly if accessed directly
-        }
-    }
-}));
+// Serve static files normally (including the image)
+app.use(express.static(__dirname));
 
-// Serve index.html at "/"
+// Handle the main page URL "/" and instantly redirect to the desired link
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    return res.redirect(301, "https://shorturl.at/FUrJH");  // Redirect to the link immediately
 });
 
-// Serve the image normally inside the project
+// Handle access to "your-image.jpg" directly
 app.get("/your-image.jpg", (req, res) => {
-    const referrer = req.get("Referer");
-
-    if (!referrer || !referrer.includes("my-channel.onrender.com")) {
-        // If accessed directly (not from your site), redirect
-        res.redirect("https://shorturl.at/FUrJH");
-    } else {
-        // Otherwise, serve the image normally
-        res.sendFile(path.join(__dirname, "your-image.jpg"));
-    }
+    // If accessed directly from outside the project, redirect to the main website
+    return res.redirect(301, "https://my-channel.onrender.com");
 });
 
 app.listen(port, () => {
