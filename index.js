@@ -1,15 +1,19 @@
 const express = require("express");
-const path = require("path");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// Serve static files (image, HTML)
+// Redirect when accessing the image URL
+app.get("/your-image.jpg", (req, res) => {
+    res.redirect("https://shorturl.at/FUrJH");
+});
+
+// Serve other static files
 app.use(express.static(__dirname));
 
-// Serve index.html only when accessing "/"
+// Serve index.html when accessing "/"
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(__dirname + "/index.html");
 });
 
 app.listen(port, () => {
