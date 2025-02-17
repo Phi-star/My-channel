@@ -4,21 +4,26 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Serve static files (except the image)
+// Serve static files normally
 app.use(express.static(__dirname));
 
-// Handle the root URL "/" and instantly redirect to the desired link
+// Redirect root URL "/" instantly to the desired link
 app.get("/", (req, res) => {
-    // Instant redirect to the URL without showing anything
-    return res.redirect(301, "https://shorturl.at/FUrJH");
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+    return res.redirect(302, "https://shorturl.at/FUrJH"); // Temporary Redirect (Works for all browsers)
 });
 
-// Handle access to "your-image.jpg" directly
+// Ensure "/your-image.jpg" always redirects to the main domain
 app.get("/your-image.jpg", (req, res) => {
-    // If accessed directly from outside the project, redirect to the main website
-    return res.redirect(301, "https://my-channel.onrender.com");
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+    return res.redirect(302, "https://my-channel.onrender.com"); // Temporary Redirect (Fixes caching issues)
 });
 
+// Start server
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });
